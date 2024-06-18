@@ -18,13 +18,13 @@ const Header = () => {
                 <div className="mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="flex items-center w-full">
                         {/* Logo */}
-                        <div className="left w-1/4">
+                        <div className="left w-1/5">
                             <Link to="/" className="flex items-center">
                                 <img src="/vite.svg" className="no-underline" width={50} />
                                 <span className="ml-2 text-zinc-800 font-extrabold text-2xl">AMAN</span>
                             </Link>
                         </div>
-                        <div className='center w-1/4 flex items-center pl-4'>
+                        <div className='center w-2/5 flex items-center pl-4'>
                             <Button className="mr-3" text={<MdOutlineMenu size={20} />} />
                             <SearchBox />
                         </div>
