@@ -14,11 +14,13 @@ import { BsShieldLockFill } from "react-icons/bs";
 import { IoIosLock } from "react-icons/io";
 
 
-
 const Header = () => {
     const [isAccountMenuVisible, setIsAccountMenuVisible] = useState(false);
     const [isNotificationVisible, setIsNotificationVisible] = useState(false);
     const [isOrderVisible, setIsOrderVisible] = useState(false)
+    const [isMessageVisible, setIsMessageVisible] = useState(false)
+    const [isSideMenuOpen, SetIsSideMenuOpen] = useState(false)
+    const [isDarkToggle, setIsDarkToggle] = useState(false);
     const [notifications, setNotifications] = useState([
         {
             id: 1,
@@ -30,52 +32,100 @@ const Header = () => {
     const [orders, setOrders] = useState([
         {
             id: 1,
-            title: 'Notification',
-            description: 'This is a notification',
+            title: 'Orders',
+            description: 'This is a order',
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRudDbHeW2OobhX8E9fAY-ctpUAHeTNWfaqJA&s'
         },
     ]);
+    const [Messages, setMessages] = useState([
+        {
+            id: 1,
+            title: 'Messages',
+            description: 'This is a Message',
+            img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRudDbHeW2OobhX8E9fAY-ctpUAHeTNWfaqJA&s'
+        },
+    ]);
+
+    // function to handle toggle side menu open and close icon
+    const handleSideMenuClick = () => {
+        SetIsSideMenuOpen(!isSideMenuOpen);
+    }
+
+    // functin to handle the toggle of dark and light mode icon
+    const handleToggleDarkAndLight = () => {
+        setIsDarkToggle(!isDarkToggle);
+    }
 
     // functoin to open and close the account menu
     const handleAccountMenuClick = () => {
         setIsAccountMenuVisible(!isAccountMenuVisible);
         if (isNotificationVisible === true) {
             setIsNotificationVisible(!isNotificationVisible);
-        }
+        };
         if (isOrderVisible === true) {
-            setIsOrderVisible(!isOrderVisible)
-        }
-    }
+            setIsOrderVisible(!isOrderVisible);
+        };
+        if (isMessageVisible === true) {
+            setIsMessageVisible(!isMessageVisible);
+        };
+    };
 
     // function to open and close the notification
     const handleNotificationClick = () => {
         setIsNotificationVisible(!isNotificationVisible);
         if (isAccountMenuVisible === true) {
             setIsAccountMenuVisible(!isAccountMenuVisible);
-        }
+        };
         if (isOrderVisible === true) {
-            setIsOrderVisible(!isOrderVisible)
-        }
-    }
+            setIsOrderVisible(!isOrderVisible);
+        };
+        if (isMessageVisible === true) {
+            setIsMessageVisible(!isMessageVisible);
+        };
+    };
 
+    // function to open and close the Order menu
     const handleOrderClick = () => {
         setIsOrderVisible(!isOrderVisible);
         if (isAccountMenuVisible === true) {
             setIsAccountMenuVisible(!isAccountMenuVisible);
-        }
+        };
         if (isNotificationVisible === true) {
             setIsNotificationVisible(!isNotificationVisible);
-        }
+        };
+        if (isMessageVisible === true) {
+            setIsMessageVisible(!isMessageVisible);
+        };
     }
 
-    // function to handle click to view all orders
+    // function to open and close the Order menu
+    const handleMessageClick = () => {
+        setIsMessageVisible(!isMessageVisible);
+        if (isAccountMenuVisible === true) {
+            setIsAccountMenuVisible(!isAccountMenuVisible);
+        };
+        if (isNotificationVisible === true) {
+            setIsNotificationVisible(!isNotificationVisible);
+        };
+        if (isOrderVisible === true) {
+            setIsOrderVisible(!isOrderVisible);
+        };
+    }
+
+    // function to handle click to view all notifications
     const handleViewNotifications = () => {
         console.log("View Notifications clicked");
-    }
+    };
 
+    // function to handle click to view all orders
     const handleViewOrders = () => {
-        console.log('VIew Orders here...')
-    }
+        console.log('View Orders here...')
+    };
+
+    // function to handle click to view all orders
+    const handleViewMessages = () => {
+        console.log('View Messages here...')
+    };
 
     return (
         <>
@@ -91,14 +141,17 @@ const Header = () => {
                         </div>
                         {/* Search section */}
                         <div className='center w-2/5 flex items-center pl-4'>
-                            <Button className="mr-3" text={<MdOutlineMenu size={20} />} />
+                            {isSideMenuOpen ? <Button className="mr-3" onClick={handleSideMenuClick} text={<MdOutlineMenuOpen size={20} />} /> : <Button className="mr-3" onClick={handleSideMenuClick} text={<MdOutlineMenu size={20} />} />
+                            }
                             <SearchBox />
                         </div>
                         {/* link icons section */}
                         <div className='right w-1/2 flex items-center justify-end pl-4'>
-                            <Button className='mr-2 lg:mr-3' text={<MdLightMode size={20} />} />
+                            {isDarkToggle ? <Button className='mr-2 lg:mr-3' onClick={handleToggleDarkAndLight} text={<MdDarkMode size={20} />} /> :
+                                <Button className='mr-2 lg:mr-3' onClick={handleToggleDarkAndLight} text={<MdLightMode size={20} />} />
+                            }
                             <Button className='mr-2 lg:mr-3' onClick={handleOrderClick} text={<IoIosCart size={20} />} />
-                            <Button className='mr-2 lg:mr-3' text={<MdEmail size={20} />} />
+                            <Button className='mr-2 lg:mr-3' onClick={handleMessageClick} text={<MdEmail size={20} />} />
                             <Button className='mr-2 lg:mr-3' onClick={handleNotificationClick} text={<FaBell size={20} />} />
 
                             {/* Account Section */}
@@ -167,6 +220,25 @@ const Header = () => {
                                         ))}
                                     </div>
                                     <button onClick={handleViewOrders} className='bg-blue-600 rounded-lg text-white'>View All Orders</button>
+                                </div>}
+                            {/* Message menu here... */}
+                            {isMessageVisible &&
+                                <div className='absolute flex flex-col gap-1 top-16 border right-40 bg-white w-[240px] shadow-xl rounded'>
+                                    <h2 className='font-semibold p-2'>Messages({Messages.length})</h2>
+                                    <div className='bg-white max-h-60 overflow-y-scroll no-scrollbar flex flex-col gap-2'>
+                                        {Messages.map(message => (
+                                            <div key={message.id} className='cursor-pointer flex items-center p-2 gap-2 bg-gray-100 hover:bg-blue-50 active:bg-blue-200'>
+                                                <span className='rounded-full overflow-hidden h-10 w-10'>
+                                                    <img className='object-cover w-full' src={message.img} alt={message.title} />
+                                                </span>
+                                                <span className='pl-2'>
+                                                    <h3 className='text-lg font-semibold'>{message.title}</h3>
+                                                    <p className='text-gray-700 opacity-80'>{message.description}</p>
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button onClick={handleMessageClick} className='bg-blue-600 rounded-lg text-white'>View All Messages</button>
                                 </div>}
                         </div>
                     </div>
