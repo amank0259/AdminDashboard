@@ -56,61 +56,45 @@ const Header = () => {
         setIsDarkToggle(!isDarkToggle);
     }
 
-    // functoin to open and close the account menu
+    // function to open and close account menu
     const handleAccountMenuClick = () => {
+        closeOtherMenus('account');
         setIsAccountMenuVisible(!isAccountMenuVisible);
-        if (isNotificationVisible === true) {
-            setIsNotificationVisible(!isNotificationVisible);
-        };
-        if (isOrderVisible === true) {
-            setIsOrderVisible(!isOrderVisible);
-        };
-        if (isMessageVisible === true) {
-            setIsMessageVisible(!isMessageVisible);
-        };
     };
 
-    // function to open and close the notification
+    // function to open and close Notifications
     const handleNotificationClick = () => {
+        closeOtherMenus('notification');
         setIsNotificationVisible(!isNotificationVisible);
-        if (isAccountMenuVisible === true) {
-            setIsAccountMenuVisible(!isAccountMenuVisible);
-        };
-        if (isOrderVisible === true) {
-            setIsOrderVisible(!isOrderVisible);
-        };
-        if (isMessageVisible === true) {
-            setIsMessageVisible(!isMessageVisible);
-        };
     };
 
-    // function to open and close the Order menu
+    // function to open and close Orders
     const handleOrderClick = () => {
+        closeOtherMenus('order');
         setIsOrderVisible(!isOrderVisible);
-        if (isAccountMenuVisible === true) {
-            setIsAccountMenuVisible(!isAccountMenuVisible);
-        };
-        if (isNotificationVisible === true) {
-            setIsNotificationVisible(!isNotificationVisible);
-        };
-        if (isMessageVisible === true) {
-            setIsMessageVisible(!isMessageVisible);
-        };
-    }
+    };
 
-    // function to open and close the Order menu
+    // function to open and close Messages
     const handleMessageClick = () => {
+        closeOtherMenus('message');
         setIsMessageVisible(!isMessageVisible);
-        if (isAccountMenuVisible === true) {
-            setIsAccountMenuVisible(!isAccountMenuVisible);
-        };
-        if (isNotificationVisible === true) {
-            setIsNotificationVisible(!isNotificationVisible);
-        };
-        if (isOrderVisible === true) {
-            setIsOrderVisible(!isOrderVisible);
-        };
-    }
+    };
+
+    // function to close all other menu when one open
+    const closeOtherMenus = (currentMenu) => {
+        if (currentMenu !== 'account' && isAccountMenuVisible) {
+            setIsAccountMenuVisible(false);
+        }
+        if (currentMenu !== 'notification' && isNotificationVisible) {
+            setIsNotificationVisible(false);
+        }
+        if (currentMenu !== 'order' && isOrderVisible) {
+            setIsOrderVisible(false);
+        }
+        if (currentMenu !== 'message' && isMessageVisible) {
+            setIsMessageVisible(false);
+        }
+    };
 
     // function to handle click to view all notifications
     const handleViewNotifications = () => {
@@ -129,11 +113,11 @@ const Header = () => {
 
     return (
         <>
-            <header className="flex items-center mx-auto px-4 sm:px-6 lg:px-8 bg-white w-full h-20">
+            <header className="flex items-center mx-auto px-4 sm:px-6 lg:px-8 bg-white w-full h-20 fixed top-0 left-0 z-50">
                 <div className="mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="flex items-center w-full relative">
                         {/* Logo */}
-                        <div className="left w-1/5">
+                        <div className="left w-1/6">
                             <Link to="/" className="flex items-center">
                                 <img src="/vite.svg" className="no-underline" width={50} />
                                 <span className="ml-2 text-zinc-800 font-extrabold text-2xl">AMAN</span>
